@@ -1,0 +1,85 @@
+﻿@model AlbarakaECommerce.Models.Order
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Customer Name
+        </dt>
+        <dd>
+            @Model.Customer.customerName  @Model.Customer.customerSurname
+        </dd>
+        
+        @foreach (var item in Model.OrderProductCons)
+        {
+        <dt>
+            @Html.DisplayNameFor(model => item.productId)
+        </dt>
+        <dd>
+            @item.Product.productName
+        </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.amount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.amount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.shipmentAdress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shipmentAdress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paymentway)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paymentway)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.orderState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.orderState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shipment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shipment)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color btn-group">
+            <button type="submit" value="Delete" class="btn btn-warning">
+                <span class="glyphicon glyphicon-floppy-remove"></span>
+                Delete
+            </button>
+            <a href="@Url.Action("Index", "Order")" class="btn btn-info">
+                <span class="glyphicon glyphicon-menu-left"></span>
+                Back to list
+            </a>
+        </div>
+    }
+</div>

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+
+<div class="container">
+    <div class="row">
+        <table class="table table-borderless">
+            <tr>
+                <td><a href="@Url.Action("Adress", "Cart", new { method = "credit", couponCode = ViewBag.couponCode })"><img src="~/images/Checkout/Credit_cart.png" alt="" style="zoom:2" /></a></td>
+                <td><a href="@Url.Action("Adress", "Cart", new { method = "debit", couponCode = ViewBag.couponCode })"><img src="~/images/Checkout/Debit_cart.png" alt="" style="zoom:2" /></a></td>
+                <td><a href="@Url.Action("Adress", "Cart", new { method = "bankWire", couponCode = ViewBag.couponCode })"><img src="~/images/Checkout/Bank_wire.png" alt="" style="zoom:2" /></a></td>
+                <td><a href="@Url.Action("Adress", "Cart", new { method = "paypal", couponCode = ViewBag.couponCode })"><img src="~/images/Checkout/Paypal.png" alt="" style="zoom:2" /></a></td>
+            </tr>
+        </table>
+    </div>
+</div>

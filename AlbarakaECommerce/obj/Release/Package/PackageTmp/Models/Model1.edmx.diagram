@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="526eab3ec54142d1ba0973a0762565ae" Name="Diagram1">
+        <EntityTypeShape EntityType="masterModel.Adress" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="masterModel.AspNetRole" Width="1.5" PointX="0.5" PointY="7.875" />
+        <EntityTypeShape EntityType="masterModel.AspNetUserClaim" Width="1.5" PointX="5.375" PointY="10.125" />
+        <EntityTypeShape EntityType="masterModel.AspNetUserLogin" Width="1.5" PointX="5.375" PointY="8" />
+        <EntityTypeShape EntityType="masterModel.AspNetUser" Width="1.5" PointX="3" PointY="8" />
+        <EntityTypeShape EntityType="masterModel.Category" Width="1.5" PointX="12.625" PointY="0.5" />
+        <EntityTypeShape EntityType="masterModel.Customer" Width="1.5" PointX="2.875" PointY="0.5" />
+        <EntityTypeShape EntityType="masterModel.Order" PointX="5.125" PointY="0.5" Width="1.5" />
+        <EntityTypeShape EntityType="masterModel.Product" Width="1.5" PointX="10" PointY="0.5" />
+        <EntityTypeShape EntityType="masterModel.Review" Width="1.5" PointX="7.625" PointY="6.5" />
+        <AssociationConnector Association="masterModel.FK_Adresses_ToTable" />
+        <AssociationConnector Association="masterModel.FK_Orders_ToAdress" />
+        <AssociationConnector Association="masterModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="masterModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="masterModel.FK_Categories_ToParent" />
+        <AssociationConnector Association="masterModel.FK_Products_ToCategory" />
+        <AssociationConnector Association="masterModel.FK_Orders_ToTable" />
+        <AssociationConnector Association="masterModel.FK_Reviews_ToCustomer" />
+        <AssociationConnector Association="masterModel.FK_Reviews_ToProducts" />
+        <AssociationConnector Association="masterModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="masterModel.OrderProductCon" Width="1.5" PointX="7.625" PointY="0.5" />
+        <AssociationConnector Association="masterModel.FK_OrderProductCon_ToOrder" />
+        <AssociationConnector Association="masterModel.FK_OrderProductCon_ToProduct" />
+        <AssociationConnector Association="masterModel.FK_AspNetUsers_ToCustomer" />
+        <EntityTypeShape EntityType="masterModel.WishlistCon" Width="1.5" PointX="7.625" PointY="3.375" />
+        <AssociationConnector Association="masterModel.FK_Table_ToCustomer" />
+        <AssociationConnector Association="masterModel.FK_Table_ToProduct" />
+        <EntityTypeShape EntityType="masterModel.Error" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="masterModel.Coupon" Width="1.5" PointX="5.125" PointY="5.25" />
+        <AssociationConnector Association="masterModel.FK_Orders_ToCoupon" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

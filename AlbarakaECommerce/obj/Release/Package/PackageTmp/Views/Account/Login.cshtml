@@ -1,0 +1,32 @@
+﻿@using AlbarakaECommerce.Models
+@{
+    ViewBag.Title = "Log in";
+}
+
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            @{ 
+                if (ViewBag.LoginModel != null)
+                { Html.RenderPartial("LoginPartial", (LoginViewModel)ViewBag.LoginModel); }
+                else
+                { Html.RenderPartial("LoginPartial", null); }
+            }
+            <div class="col-sm-1">
+                <h2 class="or">OR</h2>
+            </div>
+            @{
+                if (ViewBag.RegisterModel != null)
+                { Html.RenderPartial("RegisterPartial", (RegisterViewModel)ViewBag.RegisterModel); }
+                else
+                { Html.RenderPartial("RegisterPartial", null); }
+            }
+        </div>
+        <div class="row">
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>
+    </div>
+</section>

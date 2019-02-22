@@ -1,0 +1,89 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Customer
+        </th>
+        <th>
+            Product
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shipmentAdress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.paymentway)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.orderState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shipment)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Customer.customerName @item.Customer.customerSurname
+            </td>
+
+            @{
+                var prName = "NULL";
+                foreach (var itemP in item.OrderProductCons)
+                {
+                    if(prName == "NULL")
+                    {
+                        prName = "";
+                    }
+                    prName += itemP.Product.productName + ", ";
+                }
+                <td>
+                    @prName
+                </td>
+            }
+
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shipmentAdress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.paymentway)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.orderState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shipment)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="@Url.Action("Edit", "Order", new { id = item.orderId })" class="btn btn-success">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        Edit
+                    </a>
+                    <a href="@Url.Action("Details", "Order", new { id = item.orderId })" class="btn btn-info">
+                        <span class="glyphicon glyphicon-list-alt"></span>
+                        Details
+                    </a>
+                    <a href="@Url.Action("Delete", "Order", new { id = item.orderId })" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-floppy-remove"></span>
+                        Delete
+                    </a>
+                </div>
+            </td>
+        </tr>
+                }
+
+</table>

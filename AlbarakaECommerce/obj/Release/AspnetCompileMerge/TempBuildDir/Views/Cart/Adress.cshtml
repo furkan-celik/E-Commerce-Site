@@ -1,0 +1,58 @@
+﻿@model ICollection<AlbarakaECommerce.Models.Adress>
+
+@{
+    ViewBag.Title = "Adress";
+}
+
+<h2>Adress</h2>
+
+<div class="container">
+    <div class="row">
+        <h3>Choose an Adress</h3>
+        <ul class="list-group">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    <a data-toggle="collapse" href="#@item.adressId">@item.adressLine</a>
+                    <ul class="list-group collapse" id="@item.adressId">
+                        <h4>Details</h4>
+                        <li class="list-group-item">Responsible Name: @item.responsibleName</li>
+                        <li class="list-group-item">Adress: @item.adressLine</li>
+                        <li class="list-group-item">District: @item.district</li>
+                        <li class="list-group-item">Province: @item.province</li>
+                        <li class="list-group-item">Country: @item.country</li>
+                        <li class="list-group-item">Phone Number: @item.phoneNumber</li>
+                        <li class="list-group-item">Email Adress: @item.emailAdress</li>
+                        @using (Html.BeginForm(null, null, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => item.adressId)
+                            <input type="hidden" name="method" id="method" value="@ViewBag.method"/>
+                            <input type="hidden" name="couponCode" id="couponCode" value="@ViewBag.couponCode" />
+                            <li class="list-group-item"><input type="submit" value="Select" class="btn btn-default" /></li>
+                        }
+                    </ul>
+                </li>
+            }
+            <li class="list-group-item">
+                <a data-toggle="collapse" href="#0">Create new adress</a>
+                <ul class="list-group collapse" id="0">
+                    @using (Html.BeginForm(null, null, FormMethod.Post))
+                    {
+                        <li class="list-group-item"><input type="text" id="responsibleName" name="responsibleName" placeholder="Responsible Name" class="form-control" required/></li>
+                        <li class="list-group-item"><input type="text" id="adressLine" name="adressLine" placeholder="Adress Line" class="form-control" required/></li>
+                        <li class="list-group-item"><input type="text" id="district" name="district" placeholder="District" class="form-control" required/></li>
+                        <li class="list-group-item"><input type="text" id="province" name="province" placeholder="Province" class="form-control" required/></li>
+                        <li class="list-group-item"><input type="text" id="country" name="country" placeholder="Country" class="form-control" required/></li>
+                        <li class="list-group-item"><input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" class="form-control" required/></li>
+                        <li class="list-group-item"><input type="email" id="emailAdress" name="emailAdress" placeholder="Email Adress" class="form-control" required/></li>
+                        <input type="hidden" name="method" id="method" value="@ViewBag.method" />
+                        <input type="hidden" name="couponCode" id="couponCode" value="@ViewBag.couponCode" />
+                        <input type="hidden" name="item.adressId" id="item.adressId" value="0" />
+                        <li class="list-group-item"><input type="submit" value="Select" class="btn btn-default" class="form-control" /></li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

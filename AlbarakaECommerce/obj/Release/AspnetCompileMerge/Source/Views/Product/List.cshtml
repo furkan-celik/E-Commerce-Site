@@ -1,0 +1,119 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Product>
+@using AlbarakaECommerce.Codes
+@{
+    ViewBag.Title = "List";
+}
+
+<table>
+    <tr>
+        <td><a href="@Url.Action("List", "Product", new { show = "grid"})" class="btn navbar-brand active">Grid</a></td>
+        <td><a href="@Url.Action("Index", "Product/", new { show = "list"})" class="btn navbar-brand">List</a></td>
+        <td>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                    Select Order
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Product", new { order = "cheapest" })"><span class="glyphicon glyphicon-usd"></span> Cheapest</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Product", new { order = "expensive" })"><span class="glyphicon glyphicon-gbp"></span> Expensive</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Product", new { order = "newest" })"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-sort-by-attributes"></span> Newest</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Product", new { order = "oldest" })"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Oldest</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Product", new { order = "popular" })"><span class="glyphicon glyphicon-fire"></span><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Most Popular</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Product", new { order = "nonPopular" })"><span class="glyphicon glyphicon-fire"></span><span class="glyphicon glyphicon-sort-by-attributes"></span> Least Popular</a></li>
+                </ul>
+            </div>
+        </td>
+        </tr>
+</table>
+<div class="col-sm-3">
+    <div class="left-sidebar">
+        <h2>Category</h2>
+        <div class="panel-group category-products" id="accordian">
+            <!--category-productsr-->
+            @foreach (var item in ViewBag.categories)
+            {
+                if (item.Categories1 != null && ((ICollection<Category>)item.Categories1).Count > 0)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordian" href="#@item.categoryName">
+                                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                    @item.categoryName
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@item.categoryName" class="panel-collapse collapse" style="height: auto;">
+                            <div class="panel-body">
+                                <ul>
+                                    @foreach (var itemIn in item.Categories1)
+                                    {
+                                        <li><a href="@Url.Action("List", "Product", new { categoryId = itemIn.categoryId })">@itemIn.categoryName </a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><a href="@Url.Action("List", "Product", new { categoryId = item.categoryId })">@item.categoryName</a></h4>
+                        </div>
+                    </div>
+                }
+            }
+        </div><!--/category-productsr-->
+    </div>
+</div>
+
+<div class="col-sm-9 padding-right">
+    @{
+        foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            @if (item.productPicture != null)
+                { <img src="~/images/Products/Medium/@Path.GetFileName(item.productPicture)" alt=""> }
+                            <h2>@item.productPrice tl</h2>
+                            <p>@item.productName</p>
+                            <a href="@Url.Action("Buy", "Product", "Product")" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                        <div class="product-overlay">
+                            <table class="overlay-content">
+                                <div class="overlay-content">
+                                    <tr><td><h2>@item.productPrice tl</h2></td></tr>
+                                    <tr><td><p>@item.productDescription</p></td></tr>
+                                    @if (item.categoryId != null)
+                                    {
+                                        <tr><td><a class="btn btn-info" href="@Url.Action("List", "Product", new { categoryId = item.categoryId })">@item.Category.categoryName</a></td></tr>
+                                    }
+                                    <tr><td><a href="@Url.Action("Details", "Product", new { id = item.productId })" class="btn btn-default add-to-cart"><i class="fa fa-info-circle"></i>Details</a></td></tr>
+                                    <tr><td><a href="@Url.Action("Buy", "Product", new { id = item.productId }))" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    @if (DateTime.Now.AddDays(-7) < item.inputDate)
+                { <img src="~/images/home/new.png" class="new" alt=""> }
+                </div>
+                <div class="choose">
+                    <ul class="nav nav-pills nav-justified">
+                        @if (!Request.IsAuthenticated || helperFunctions.GetActiveCustomer().WishlistCons.Where(x => x.productId == item.productId).ToList().Count == 0)
+                        {
+                            <li><a href="@Url.Action("Add", "Wishlist", new { productId = item.productId, returnView = "List", returnController = "Product" }) "><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Action("Add", "Wishlist", new { productId = item.productId, returnView = "List", returnController = "Product" }) "><i class="fa fa-heart"></i>Add to wishlist</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+        
+    }
+</div>

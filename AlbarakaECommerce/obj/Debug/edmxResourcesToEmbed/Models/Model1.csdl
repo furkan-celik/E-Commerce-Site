@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="masterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="masterEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Adresses" EntityType="masterModel.Adress" />
+    <EntitySet Name="AspNetRoles" EntityType="masterModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="masterModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="masterModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="masterModel.AspNetUser" />
+    <EntitySet Name="Categories" EntityType="masterModel.Category" />
+    <EntitySet Name="Customers" EntityType="masterModel.Customer" />
+    <EntitySet Name="Orders" EntityType="masterModel.Order" />
+    <EntitySet Name="Products" EntityType="masterModel.Product" />
+    <EntitySet Name="Reviews" EntityType="masterModel.Review" />
+    <AssociationSet Name="FK_Adresses_ToTable" Association="masterModel.FK_Adresses_ToTable">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Adress" EntitySet="Adresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_ToAdress" Association="masterModel.FK_Orders_ToAdress">
+      <End EntitySet="Adresses" Role="Adress" />
+      <End EntitySet="Orders" Role="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="masterModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="masterModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categories_ToParent" Association="masterModel.FK_Categories_ToParent">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Category1" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_ToCategory" Association="masterModel.FK_Products_ToCategory">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_ToTable" Association="masterModel.FK_Orders_ToTable">
+      <End EntitySet="Customers" Role="Customer" />
+      <End EntitySet="Orders" Role="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_ToCustomer" Association="masterModel.FK_Reviews_ToCustomer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reviews_ToProducts" Association="masterModel.FK_Reviews_ToProducts">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="masterModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="OrderProductCons" EntityType="masterModel.OrderProductCon" />
+    <AssociationSet Name="FK_OrderProductCon_ToOrder" Association="masterModel.FK_OrderProductCon_ToOrder">
+      <End EntitySet="Orders" Role="Order" />
+      <End EntitySet="OrderProductCons" Role="OrderProductCon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderProductCon_ToProduct" Association="masterModel.FK_OrderProductCon_ToProduct">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderProductCon" EntitySet="OrderProductCons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUsers_ToCustomer" Association="masterModel.FK_AspNetUsers_ToCustomer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="WishlistCons" EntityType="masterModel.WishlistCon" />
+    <AssociationSet Name="FK_Table_ToCustomer" Association="masterModel.FK_Table_ToCustomer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="WishlistCon" EntitySet="WishlistCons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_ToProduct" Association="masterModel.FK_Table_ToProduct">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="WishlistCon" EntitySet="WishlistCons" />
+    </AssociationSet>
+    <EntitySet Name="Errors" EntityType="masterModel.Error" />
+    <EntitySet Name="Coupons" EntityType="masterModel.Coupon" />
+    <AssociationSet Name="FK_Orders_ToCoupon" Association="masterModel.FK_Orders_ToCoupon">
+      <End Role="Coupon" EntitySet="Coupons" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Adress">
+    <Key>
+      <PropertyRef Name="adressId" />
+    </Key>
+    <Property Name="adressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerId" Type="Int32" Nullable="false" />
+    <Property Name="responsibleName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="adressLine" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="district" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="province" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="country" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="phoneNumber" Type="Int64" />
+    <Property Name="emailAdress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="masterModel.FK_Adresses_ToTable" FromRole="Adress" ToRole="Customer" />
+    <NavigationProperty Name="Orders" Relationship="masterModel.FK_Orders_ToAdress" FromRole="Adress" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="masterModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="masterModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="masterModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="masterModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="masterModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="AspNetRoles" Relationship="masterModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+    <NavigationProperty Name="Customer" Relationship="masterModel.FK_AspNetUsers_ToCustomer" FromRole="AspNetUser" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="categoryId" />
+    </Key>
+    <Property Name="categoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="categoryName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="subCategoryId" Type="Int32" />
+    <NavigationProperty Name="Categories1" Relationship="masterModel.FK_Categories_ToParent" FromRole="Category" ToRole="Category1" />
+    <NavigationProperty Name="Category1" Relationship="masterModel.FK_Categories_ToParent" FromRole="Category1" ToRole="Category" />
+    <NavigationProperty Name="Products" Relationship="masterModel.FK_Products_ToCategory" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="customerSurname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="profilePicture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="customerAdress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="validity" Type="Boolean" />
+    <NavigationProperty Name="Adresses" Relationship="masterModel.FK_Adresses_ToTable" FromRole="Customer" ToRole="Adress" />
+    <NavigationProperty Name="Orders" Relationship="masterModel.FK_Orders_ToTable" FromRole="Customer" ToRole="Order" />
+    <NavigationProperty Name="Reviews" Relationship="masterModel.FK_Reviews_ToCustomer" FromRole="Customer" ToRole="Review" />
+    <NavigationProperty Name="AspNetUsers" Relationship="masterModel.FK_AspNetUsers_ToCustomer" FromRole="Customer" ToRole="AspNetUser" />
+    <NavigationProperty Name="WishlistCons" Relationship="masterModel.FK_Table_ToCustomer" FromRole="Customer" ToRole="WishlistCon" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="orderId" />
+    </Key>
+    <Property Name="orderId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+    <Property Name="amount" Type="Int32" />
+    <Property Name="shipmentAdress" MaxLength="Max" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="paymentway" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="orderState" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="shipment" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+    <Property Name="userNotified" Type="Boolean" />
+    <Property Name="validity" Type="Boolean" />
+    <Property Name="customerId" Nullable="false" Type="Int32" />
+    <Property Name="purchaseDate" Precision="3" Type="DateTime" />
+    <Property Name="adress" Type="Int32" />
+    <NavigationProperty Name="Adress1" Relationship="masterModel.FK_Orders_ToAdress" FromRole="Order" ToRole="Adress" />
+    <NavigationProperty Name="Customer" Relationship="masterModel.FK_Orders_ToTable" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="OrderProductCons" Relationship="masterModel.FK_OrderProductCon_ToOrder" FromRole="Order" ToRole="OrderProductCon" />
+    <Property Name="CouponId" Type="Int32" />
+    <NavigationProperty Name="Coupon" Relationship="masterModel.FK_Orders_ToCoupon" FromRole="Order" ToRole="Coupon" />
+    <Property Name="totalPrice" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="productId" />
+    </Key>
+    <Property Name="productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="productName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="productDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="productPicture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="remainedAmount" Type="Int32" />
+    <Property Name="productPrice" Type="Int32" />
+    <Property Name="inputDate" Type="DateTime" Precision="3" />
+    <Property Name="validity" Type="Boolean" />
+    <Property Name="categoryId" Type="Int32" />
+    <NavigationProperty Name="Category" Relationship="masterModel.FK_Products_ToCategory" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="Reviews" Relationship="masterModel.FK_Reviews_ToProducts" FromRole="Product" ToRole="Review" />
+    <NavigationProperty Name="OrderProductCons" Relationship="masterModel.FK_OrderProductCon_ToProduct" FromRole="Product" ToRole="OrderProductCon" />
+    <NavigationProperty Name="WishlistCons" Relationship="masterModel.FK_Table_ToProduct" FromRole="Product" ToRole="WishlistCon" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="reviewId" />
+    </Key>
+    <Property Name="reviewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="reviewDate" Type="DateTime" Precision="3" />
+    <Property Name="reviewContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="customerId" Type="Int32" />
+    <Property Name="productId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="masterModel.FK_Reviews_ToCustomer" FromRole="Review" ToRole="Customer" />
+    <NavigationProperty Name="Product" Relationship="masterModel.FK_Reviews_ToProducts" FromRole="Review" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_Adresses_ToTable">
+    <End Type="masterModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="masterModel.Adress" Role="Adress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Adress">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_ToAdress">
+    <End Type="masterModel.Adress" Multiplicity="0..1" Role="Adress" />
+    <End Type="masterModel.Order" Multiplicity="*" Role="Order" />
+    <ReferentialConstraint>
+      <Principal Role="Adress">
+        <PropertyRef Name="adressId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="adress" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="masterModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="masterModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="masterModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="masterModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categories_ToParent">
+    <End Type="masterModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="masterModel.Category" Role="Category1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="Category1">
+        <PropertyRef Name="subCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_ToCategory">
+    <End Type="masterModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="masterModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_ToTable">
+    <End Type="masterModel.Customer" Multiplicity="1" Role="Customer" />
+    <End Type="masterModel.Order" Multiplicity="*" Role="Order" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_ToCustomer">
+    <End Type="masterModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="masterModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reviews_ToProducts">
+    <End Type="masterModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="masterModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="masterModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="masterModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="OrderProductCon">
+    <Key>
+      <PropertyRef Name="nodeId" />
+      <PropertyRef Name="orderId" />
+      <PropertyRef Name="productId" />
+    </Key>
+    <Property Name="nodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="orderId" Type="Int32" Nullable="false" />
+    <Property Name="productId" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="masterModel.FK_OrderProductCon_ToOrder" FromRole="OrderProductCon" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="masterModel.FK_OrderProductCon_ToProduct" FromRole="OrderProductCon" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_OrderProductCon_ToOrder">
+    <End Type="masterModel.Order" Multiplicity="1" Role="Order" />
+    <End Type="masterModel.OrderProductCon" Multiplicity="*" Role="OrderProductCon" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="orderId" />
+      </Principal>
+      <Dependent Role="OrderProductCon">
+        <PropertyRef Name="orderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderProductCon_ToProduct">
+    <End Type="masterModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="masterModel.OrderProductCon" Role="OrderProductCon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="OrderProductCon">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUsers_ToCustomer">
+    <End Type="masterModel.Customer" Role="Customer" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="masterModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="AspNetUser">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="WishlistCon">
+    <Key>
+      <PropertyRef Name="nodeId" />
+      <PropertyRef Name="customerId" />
+      <PropertyRef Name="productId" />
+    </Key>
+    <Property Name="nodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerId" Type="Int32" Nullable="false" />
+    <Property Name="productId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="masterModel.FK_Table_ToCustomer" FromRole="WishlistCon" ToRole="Customer" />
+    <NavigationProperty Name="Product" Relationship="masterModel.FK_Table_ToProduct" FromRole="WishlistCon" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_Table_ToCustomer">
+    <End Type="masterModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="masterModel.WishlistCon" Role="WishlistCon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WishlistCon">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_ToProduct">
+    <End Type="masterModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="masterModel.WishlistCon" Role="WishlistCon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="WishlistCon">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Error">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="innerExceptionMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="view_function" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="controller" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="timeStamp" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="couponName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="couponCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="discount" Type="Int32" Nullable="false" />
+    <Property Name="endDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Orders" Relationship="masterModel.FK_Orders_ToCoupon" FromRole="Coupon" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_Orders_ToCoupon">
+    <End Type="masterModel.Coupon" Role="Coupon" Multiplicity="0..1" />
+    <End Type="masterModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupon">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CouponId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

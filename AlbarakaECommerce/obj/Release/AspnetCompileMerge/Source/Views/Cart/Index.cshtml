@@ -1,0 +1,143 @@
+﻿@model IEnumerable<AlbarakaECommerce.Codes.CartProduct>
+
+@{
+    ViewBag.Title = "Index";
+    double totalPrice = 0.0;
+}
+
+<script>
+    function ShowInput() {
+        if (document.getElementById("couponDiv").style.display == "") {
+            document.getElementById("couponDiv").style.display = "none";
+        } else {
+            document.getElementById("couponDiv").style.display = "";
+        }
+    }
+
+    function submitCoupon() {
+        var value = document.getElementById("couponCode").value;
+        window.location.href = "Cart/Index?couponCode=" + value;
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Shopping Cart</li>
+                    </ol>
+                </div>
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image">Item</td>
+                                <td class="description"></td>
+                                <td class="price">Price</td>
+                                <td class="quantity">Quantity</td>
+                                <td class="total">Total</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="cart_product">
+                                        <a href=""><img src="~/images/Products/Small/@Path.GetFileName(item.product.productPicture)" alt=""></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="@Url.Action("Details", "Product", new { id = item.product.productId })">@item.product.productName</a></h4>
+                                        <a href="@Url.Action("Details", "Product", new { id = item.product.productId })">@item.product.productDescription</a>
+                                        <p>Web ID: @item.product.productId</p>
+                                    </td>
+                                    <td class="cart_price">
+                                        <p>@item.product.productPrice tl</p>
+                                    </td>
+                                    @{
+                                        var amount = "amount" + item.product.productId;
+                                        var total = item.product.productPrice * item.amount;
+                                        totalPrice += (double)total;
+                                    }
+                                    <td class="cart_quantity">
+                                        <div class="cart_quantity_button">
+                                            <input class="cart_quantity_input" type="number" name="@amount" value="@item.amount" min="0" max="@item.product.remainedAmount" autocomplete="off" size="2" />
+                                        </div>
+                                    </td>
+                                    <td class="cart_total">
+                                        <p class="cart_total_price">@total tl</p>
+                                    </td>
+                                    <td class="cart_delete">
+                                        <a class="cart_quantity_delete" href="@Url.Action("Remove", "Remove", new { id = item.product.productId })"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="do_action">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="chose_area">
+                            <ul class="user_option">
+                                <li>
+                                    <input type="checkbox" onclick="ShowInput()">
+                                    <label>Use Coupon Code</label>
+                                    <div id="couponDiv" style="display:none;" class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Coupon Code" id="couponCode" value="@ViewBag.couponCode">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="button" id="couponApply" onclick="submitCoupon()">
+                                                    <i class="glyphicon glyphicon-ok"> Apply</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <input type="checkbox">
+                                    <label>Use Gift Voucher</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox">
+                                    <label>Estimate Shipping &amp; Taxes</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <ul>
+                                <li>Cart Sub Total <span>@totalPrice tl</span></li>
+                                <li>Shipping Cost <span>Free</span></li>
+                                @{ 
+                                    if(ViewBag.discount != null && ViewBag.discount != 0)
+                                    {
+                                        totalPrice = totalPrice * ViewBag.discount / 100.0;
+                                    }
+                                }
+                                <li>Total <span>@totalPrice tl</span></li>
+                            </ul>
+                            <div class="btn-group-sm">
+                                <button type="submit" value="Update" class="btn btn-default update" >
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                    Update
+                                </button>
+                                <a class="btn btn-default check_out" href="@Url.Action("Checkout", "Cart", new { couponCode = ViewBag.couponCode })">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    Check Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                        }

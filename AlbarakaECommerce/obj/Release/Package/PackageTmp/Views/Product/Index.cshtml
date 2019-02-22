@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Product>
+@using AlbarakaECommerce.Codes
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table>
+    <tr>
+        <td><a href="@Url.Action("List", "Product", new { show = "grid"})" class="btn navbar-brand">Grid</a></td>
+        <td><a href="@Url.Action("Index", "Product/", new { show = "list"})" class="btn navbar-brand active">List</a></td>
+    </tr>
+</table>
+
+@if (helperFunctions.IsAdminUser())
+{
+    <p>
+        <a href="@Url.Action("Create")" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span>
+            New Product
+        </a>
+    </p>
+}
+
+<p>
+    <table name="Products" class="table">
+        <tr>
+            <td>Product name</td>
+            <td>Amount</td>
+            <td>Product Price</td>
+            <td>Input Date</td>
+            <td></td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.productName</td>
+                <td>@item.remainedAmount</td>
+                <td>@item.productPrice</td>
+                <td>@item.inputDate</td>
+
+                <td>
+                    <div class="btn-group">
+                        <a href="@Url.Action("Details", "Product", new { id = item.productId })" class="btn btn-info">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            Details
+                        </a>
+                        <a href="@Url.Action("Buy", "Product", new { id = item.productId })" class="btn btn-success">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            Buy
+                        </a>
+                        @if (helperFunctions.IsAdminUser())
+                        {
+                            <a href="@Url.Action("Edit", "Product", new { id = item.productId })" class="btn btn-info">
+                                <span class="glyphicon glyphicon-edit"></span>
+                                Edit
+                            </a>
+                            <a href="@Url.Action("Delete", "Product", new { id = item.productId })" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-floppy-remove"></span>
+                                Delete
+                            </a>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</p>

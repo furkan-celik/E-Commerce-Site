@@ -1,0 +1,74 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h3>Customer's Orders</h3>
+
+<p>
+    @Html.ActionLink("Create New", "../Order/Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.orderId)
+        </th>
+        <th>
+            Products
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shipmentAdress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.paymentway)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.orderState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shipment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.orderId)
+        </td>
+        <td>
+            @foreach (var itemP in item.OrderProductCons)
+            {
+                @itemP.Product.productName <br />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adress1.adressLine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.paymentway)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.orderState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.shipment)
+        </td>
+        <td>
+            <a href="@Url.Action("Details", "Order", new { id = item.orderId })" class="btn btn-info">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                Details
+            </a>
+        </td>
+    </tr>
+}
+
+</table>
+
+<p>
+    <a href="@Url.Action("Index", "Customer")" class="btn btn-info">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        Back to list
+    </a>
+</p>

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Product>
+@using Microsoft.AspNet.Identity
+@using AlbarakaECommerce.Codes
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Newest Products</h2>
+
+<div class="col-sm-12 padding-right">
+    @{
+            foreach (var item in Model)
+            {
+            <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            @if (item.productPicture != null)
+                { <img src="~/images/Products/Medium/@Path.GetFileName(item.productPicture)" alt=""> }
+                            <h2>@item.productPrice tl</h2>
+                            <p>@item.productName</p>
+                            <a href="@Url.Action("Buy", "Product", "Product")" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                        <div class="product-overlay">
+                            <table class="overlay-content">
+                                <div class="overlay-content">
+                                    <tr><td><h2>@item.productPrice tl</h2></td></tr>
+                                    <tr><td><p>@item.productDescription</p></td></tr>
+                                    @if (item.categoryId != null)
+                                    {
+                                        <tr><td><a class="btn btn-info" href="@Url.Action("List", "Product", new { categoryId = item.categoryId })">@item.Category.categoryName</a></td></tr>
+                                    }
+                                    <tr><td><a href="@Url.Action("Details", "Product", new { id = item.productId })" class="btn btn-default add-to-cart"><i class="fa fa-info-circle"></i>Details</a></td></tr>
+                                    <tr><td><a href="@Url.Action("Buy", "Product", new { id = item.productId })" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    @if (DateTime.Now.AddDays(-5) < item.inputDate)
+                { <img src="~/images/home/new.png" class="new" alt=""> }
+                </div>
+                <div class="choose">
+                    <ul class="nav nav-pills nav-justified">
+                        @if (!Request.IsAuthenticated || helperFunctions.GetActiveCustomer().WishlistCons.Where(x => x.productId == item.productId).ToList().Count == 0)
+                        {
+                            <li><a href="@Url.Action("Add", "Wishlist", new { productId = item.productId, returnView = "List", returnController = "Product" }) "><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Action("Add", "Wishlist", new { productId = item.productId, returnView = "List", returnController = "Product" }) "><i class="fa fa-heart"></i>Add to wishlist</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div class="container"></div>
+
+<div class="category-tab">
+    <!--category-tab-->
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#popular" data-toggle="tab">Most Populars</a></li>
+            <li><a href="#cheapest" data-toggle="tab">Cheapest Products</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="popular">
+            @foreach (var item in ViewBag.popularPrs)
+            {
+                <div class="col-sm-3">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="~/images/Products/Small/@Path.GetFileName(item.productPicture)" alt="">
+                                <h2>@item.productPrice tl</h2>
+                                <p>@item.productName</p>
+                                <tr><td><a href="@Url.Action("Buy", "Product", new { id = item.productId }))" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a></td></tr>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="tab-pane fade" id="cheapest">
+            @foreach (var item in ViewBag.cheapestPrs)
+            {
+                <div class="col-sm-3">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="~/images/Products/Small/@Path.GetFileName(item.productPicture)" alt="">
+                                <h2>@item.productPrice tl</h2>
+                                <p>@item.productName</p>
+                                <tr><td><a href="@Url.Action("Buy", "Product", new { id = item.productId }))" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a></td></tr>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

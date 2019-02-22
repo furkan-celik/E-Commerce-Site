@@ -1,0 +1,119 @@
+﻿@model AlbarakaECommerce.Models.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+    <title>Editable Invoice</title>
+
+    <link rel='stylesheet' type='text/css' href='~/Content/style.css' />
+    <link rel='stylesheet' type='text/css' href='~/Content/print.css' media="print" />
+    <script type='text/javascript' src='~/Scripts/jquery-1.11.1.min.js'></script>
+</head>
+<body>
+    <div id="page-wrap">
+        <p id="header">INVOICE</p>
+
+        <div id="identity">
+
+            <p id="address">
+                @Model.Adress1.adressLine
+                @Model.Adress1.district / @Model.Adress1.province / @Model.Adress1.country
+                <br />
+                Phone: @Model.Adress1.phoneNumber
+            </p>
+            <div id="logo">
+                <div id="logohelp">
+                    <input id="imageloc" type="text" size="50" value="" /><br />
+                    (max width: 540px, max height: 100px)
+                </div>
+                <img id="image" src="~/images/home/logo.png" alt="logo" />
+            </div>
+
+        </div>
+
+        <div style="clear:both"></div>
+
+        <div id="customer">
+            <p id="customer-title">
+                @Model.Customer.customerName @Model.Customer.customerSurname
+            </p>
+            <table id="meta">
+                <tr>
+                    <td class="meta-head">Invoice #</td>
+                    <td><p>@Model.orderId</p></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Date</td>
+                    <td><p id="date">@Model.purchaseDate</p></td>
+                </tr>
+                <tr>
+                    <td class="meta-head">Amount Due</td>
+                    <td><div class="due">@Model.totalPrice tl</div></td>
+                </tr>
+            </table>
+
+        </div>
+
+        <table id="items">
+
+            <tr>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+
+            @foreach (var item in Model.OrderProductCons)
+            {
+                <tr class="item-row">
+                    <td class="item-name">@item.Product.productName</td>
+                    <td class="description"><p>@item.Product.productDescription</p></td>
+                    <td><p class="cost">@item.Product.productPrice</p></td>
+                    <td><p class="qty">@item.amount</p></td>
+                    <td><span class="price">@(item.amount * item.Product.productPrice)</span></td>
+                </tr>
+            }
+
+            <tr id="hiderow">
+                <td colspan="5"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="blank"> </td>
+                <td colspan="2" class="total-line">Subtotal</td>
+                <td class="total-value"><div id="subtotal">@Model.totalPrice tl</div></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="blank"> </td>
+                <td colspan="2" class="total-line">Total</td>
+                <td class="total-value"><div id="total">@Model.totalPrice tl</div></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="blank"> </td>
+                <td colspan="2" class="total-line">Amount Paid</td>
+                <td class="total-value"><p id="paid">@Model.totalPrice tl</p></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="blank"> </td>
+                <td colspan="2" class="total-line balance">Balance Due</td>
+                <td class="total-value balance"><div class="due">@Model.totalPrice tl</div></td>
+            </tr>
+
+        </table>
+
+        <div id="terms">
+            <h5>Terms</h5>
+            <p>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

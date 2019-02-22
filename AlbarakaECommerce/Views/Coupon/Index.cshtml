@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Coupon>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Coupons</h3>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        New Coupon
+    </a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.couponName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.couponCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.endDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.couponName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.couponCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endDate)
+        </td>
+        <td>
+            <div class="btn-group">
+                <a href="@Url.Action("Edit", "Coupon", new { id = item.id })" class="btn btn-success">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edit
+                </a>
+                <a href="@Url.Action("Details", "Coupon", new { id = item.id })" class="btn btn-info">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    Details
+                </a>
+                <a href="@Url.Action("Delete", "Coupon", new { id = item.id })" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-floppy-remove"></span>
+                    Delete
+                </a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

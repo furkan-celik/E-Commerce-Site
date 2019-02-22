@@ -1,0 +1,58 @@
+﻿@using AlbarakaECommerce.Models
+@using AlbarakaECommerce.Codes
+
+@{
+    ViewBag.Title = "All Customers";
+}
+@model IEnumerable<Customer>
+
+
+<h2>@ViewBag.Title</h2>
+    @ViewBag.Test
+    @if (helperFunctions.IsAdminUser())
+    {
+    <p>
+    </p>
+    }
+    <table class="table">
+
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Adress</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.customerName</td>
+                <td>@item.customerSurname</td>
+                <td>@item.customerAdress</td>
+
+                @if (Request.IsAuthenticated && (helperFunctions.IsAdminUser() || item.id == helperFunctions.GetActiveCustomer().id))
+                {
+                    <td>
+                        <div class="btn-group">
+                            <a href="@Url.Action("Change", "Customer", new { id = item.id })" class="btn btn-success">
+                                <span class="glyphicon glyphicon-edit"></span>
+                                Edit
+                            </a>
+                            <a href="@Url.Action("Orders", "Customer", new { id = item.id })" class="btn btn-info">
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                                Orders
+                            </a>
+                            <a href="@Url.Action("Delete", "Customer", new { id = item.id })" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-floppy-remove"></span>
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+        }
+    </table>

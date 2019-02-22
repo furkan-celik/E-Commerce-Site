@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Categories</h3>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        New Category
+    </a>
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.categoryName)
+        </th>
+        <th>
+            Sub Category
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.categoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category1.categoryName)
+        </td>
+        <td>
+            <div class="btn-group">
+                <a href="@Url.Action("Edit", "Category", new { id = item.categoryId })" class="btn btn-success">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edit
+                </a>
+                <a href="@Url.Action("Details", "Category", new { id = item.categoryId })" class="btn btn-info">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    Details
+                </a>
+                <a href="@Url.Action("Delete", "Category", new { id = item.categoryId })" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-floppy-remove"></span>
+                    Delete
+                </a>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

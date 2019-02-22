@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AlbarakaECommerce.Models.Adress>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Your Adresses</h3>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        New Adress
+    </a>
+</p>
+<div class="table-responsive">
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.responsibleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.adressLine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.district)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.province)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.emailAdress)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.responsibleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.adressLine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.district)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.province)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.emailAdress)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a href="@Url.Action("Edit", "Adress", new { id = item.adressId })" class="btn btn-success">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            Edit
+                        </a>
+                        <a href="@Url.Action("Details", "Adress", new { id = item.adressId })" class="btn btn-info">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            Details
+                        </a>
+                        <a href="@Url.Action("Delete", "Adress", new { id = item.adressId })" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-floppy-remove"></span>
+                            Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
